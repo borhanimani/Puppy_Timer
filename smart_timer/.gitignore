@@ -1,0 +1,68 @@
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+
+# Python cache
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+
+# Coverage
+.coverage
+.coverage.*
+htmlcov/
+
+
+# IDE / Editors
+.vscode/
+.idea/
+
+# VS Code local history
+.history/
+
+# JetBrains
+*.iml
+
+# OS files
+# Windows
+Thumbs.db
+Desktop.ini
+
+# macOS
+.DS_Store
+
+# Linux
+.directory
+
+# Environment / Secrets
+.env
+.env.*
+!.env.example
+
+*.pem
+*.key
+*.secret
+
+
+# Logs
+*.log
+logs/
+
+
+# Temporary files
+*.tmp
+*.temp
+*.bak
+*.swp
+*.swo
+
+# Audio recordings / temporary audio
+recordings/
+audio_cache/
+temp_audio/
+
+
+# Vosk Models
+models/
