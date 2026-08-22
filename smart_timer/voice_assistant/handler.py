@@ -21,22 +21,14 @@ class VoiceAssistantHandler:
                 pass
 
         except KeyboardInterrupt:
-
-            print(
-                "\nCtrl+C received."
-            )
+            print("\nCtrl+C received.")
 
         finally:
-
-            print(
-                "Shutting down..."
-            )
+            print("Shutting down...")
 
             self._voice_engine.stop()
 
-            print(
-                "Voice engine stopped"
-            )
+            print("Voice engine stopped")
 
     def stop_engine(self):
         self._voice_engine.stop()
