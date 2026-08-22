@@ -37,3 +37,6 @@ class VoiceAssistantHandler:
             print(
                 "Voice engine stopped"
             )
+
+    def stop_engine(self):
+        self._voice_engine.stop()
