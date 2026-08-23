@@ -1,6 +1,6 @@
-from .engine import VoiceEngine
+from .handler import VoiceAssistantHandler
 
 
 __all__=[
-    "VoiceEngine"
+    "VoiceAssistantHandler"
 ]
