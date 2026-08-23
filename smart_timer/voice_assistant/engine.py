@@ -135,7 +135,8 @@ class VoiceEngine:
 
         # Stop recognition thread.
         if self.thread is not None:
-            self.thread.join(timeout=THREAD_JOIN_TIMEOUT)
+            if threading.current_thread() is not self.thread:
+                self.thread.join(timeout=THREAD_JOIN_TIMEOUT)
             self.thread = None
 
         # Clear remaining audio from RAM.
