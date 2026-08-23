@@ -56,67 +56,89 @@ class TimerVoiceController:
         return time 
 
     def get_text(self, text):
-        print(text)
+        print('text: ',text)
 
         words = text.lower().split(' ')
-        # self._Assistant_called = self.check_wake_word(words)
-
-        # if not self._Assistant_called:
-            # return 
-
         print("CHECKING >>>>>")
 
         total_time_second = 0
         rest_time_second = 0
+        word = ''
+        word2 = ''
         command = ''
-        number= -1
+        number= None
         time_unit = ''
         time_mode = ''
         command_identified = False
         number_identified = False
         time_unit_identified = False
         time_mode_identifed = False
+        command_is_real = False
 
         for i in range(len(words)):
             word = words[i]
+            if (i+1) < len(words):
+                word2 = words[i+1]
 
-            command = self.get_command(word)
+            # print('===============================')
+
+            if not command_identified:
+                command = self.get_command(word)
+
+            # print('command: ', command)
+
             if command != None:
                 command_identified = True
 
-            number = self.get_number(word,words[i+1])
-            if number != -1:
+
+            if not number_identified:
+                number = self.get_number(word,word2)
+
+            # print('number: ', number)
+
+            if number != None:
                 number_identified = True
 
-            time_unit = self.get_time_unit(word)
+            if not time_unit_identified:
+                time_unit = self.get_time_unit(word)
+
+            # print('time unit: ', time_unit)
+
             if time_unit != None:
                 time_unit_identified = True
 
-            time_mode = self.get_time_mode(word)
+
+            if not time_mode_identifed:
+                time_mode = self.get_time_mode(word)
+
+            # print('time mode: ', time_mode)
+
             if time_mode != None:
                 time_mode_identifed = True
 
-            if command_identified:
+            if command == "start":
                 command_identified = False
-                if command == "start":
-                    return
-                    # call an func
-    
-                if (number_identified and time_unit_identified and time_mode_identifed):
-                    number_identified = False
-                    time_unit_identified = False
-                    time_mode_identifed = False
+                return
+                # call a func
 
-                    if time_mode == 'total':
-                        total_time_second = self.time_in_second(number, time_unit)
+            if (number_identified and time_unit_identified and time_mode_identifed):
+                command_identified = False
+                number_identified = False
+                time_unit_identified = False
+                time_mode_identifed = False
+                command_is_real = True
 
-                    if time_mode == 'rest':
-                        rest_time_second = self.time_in_second(number, time_unit)
+                if time_mode == 'total':
+                    total_time_second = self.time_in_second(number, time_unit)
 
-        print('total: ',total_time_second)
-        print('rest: ',rest_time_second)
+                if time_mode == 'rest':
+                    rest_time_second = self.time_in_second(number, time_unit)
 
-
+        if command_is_real:
+            print('===============================')
+            print('total: ',total_time_second)
+            print('rest: ',rest_time_second)
+            print('===============================')
 
     def load_assistant(self):
         self._voice_handler = VoiceAssistantHandler(self.get_text)

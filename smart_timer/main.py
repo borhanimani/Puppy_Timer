@@ -11,8 +11,8 @@ from controller.wake_word_controller import WakeWordController
 # handler = VoiceAssistantHandler(command)
 # handler.run_engine()
 
-# a = TimerVoiceController()
-# a.load_assistant()
+a = TimerVoiceController()
+a.load_assistant()
 
-b = WakeWordController()
-b.load_assistant()
+# b = WakeWordController()
+# b.load_assistant()

@@ -5,20 +5,25 @@ WAKE_WORDS = [
 
 TIME_UNIT_MINITUE_EN = [
     'min',
-    'minitue',
-    'minitues',
+    'minute',
+    'minutes',
 ]
 
 TIME_UNIT_SECOND_EN = [
     'sec',
-    'seccond',
-    'secconds',
+    'second',
+    'seconds',
+    'say can',
+    "say can't",
 ]
 
 COMMAND_CREATE_EN = [
     'set',
     'create',
     'make',
+    'timer',
+    'time',
+    'times',
 ]
 
 COMMAND_START_EN = [
@@ -28,21 +33,28 @@ COMMAND_START_EN = [
     'run',
     'go',
     'active',
-    'with',
+    'star'
 ]
 
 TIME_WORK_MODE_EN = [
     'timer',
     'total',
+    'work',
+    'excercise',
+    'practice',
+    'focus',
+    'time',
+    'times',
 ]
 
 TIME_REST_MODE_EN = [
     'rest',
+    'raced',
+    'impressed',
 ]
 
 NUMBERS_EN = {
     "zero": 0,
-    "a" : 1,
     "one": 1,
     "two": 2,
     "three": 3,
