@@ -160,12 +160,15 @@ class TimerVoiceController(QObject):
             print('===============================')
 
     def load_assistant(self):
+        if self._voice_handler:
+            return
+
         self._voice_handler = VoiceAssistantHandler(self.get_text)
-        self._voice_handler.run_engine()
+        self._voice_handler.start()
 
     def stop_assistant(self):
         if self._voice_handler:
-            self._voice_handler.stop_engine()
+            self._voice_handler.stop()
             self._voice_handler = None
             print("Assistant Stoped.")
 

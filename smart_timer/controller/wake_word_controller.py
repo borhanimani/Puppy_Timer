@@ -19,10 +19,13 @@ class WakeWordController:
 
 
     def load_assistant(self):
+        if self._voice_assisstant_handler:
+            return
+
         self._voice_assisstant_handler = VoiceAssistantHandler(self.check_word)
-        self._voice_assisstant_handler.run_engine()
+        self._voice_assisstant_handler.start()
 
     def stop_wake_word(self):
         if self._voice_assisstant_handler:
-            self._voice_assisstant_handler.stop_engine()
+            self._voice_assisstant_handler.stop()
             self._voice_assisstant_handler = None
