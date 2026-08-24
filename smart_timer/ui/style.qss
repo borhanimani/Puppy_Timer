@@ -389,3 +389,26 @@ QSpinBox::down-arrow {
     width: 10px;
     height: 10px;
 }
+
+/* ==========================================================
+   WINDOW TOGGLE BUTTON
+   ========================================================== */
+
+#windowButton {
+    background: #EEEAFE;
+    color: #5D50C9;
+
+    border: none;
+    border-radius: 8px;
+
+    padding: 0px;
+    margin: 0px;
+}
+
+#windowButton:hover {
+    background: #E4DFFA;
+}
+
+#windowButton:pressed {
+    background: #D9D2F4;
+}
