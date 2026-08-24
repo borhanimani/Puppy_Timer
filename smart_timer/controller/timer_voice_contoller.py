@@ -6,6 +6,11 @@ class TimerVoiceController(QObject):
     createTimerSignal = Signal(int, int)
     startTimerSignal = Signal()
     deleteTimerSignal = Signal()
+
+    voiceStartedSignal = Signal()
+    voiceFailedSignal = Signal()
+    voiceSuccessSignal = Signal()
+
     _Assistant_called = False
 
     def __init__(self, ui_handler):
@@ -150,6 +155,7 @@ class TimerVoiceController(QObject):
 
         if command_is_real:
             # self._ui_handler.create_ui_timer(total_time_second,rest_time_second)
+            self.voiceSuccessSignal.emit()
             self.createTimerSignal.emit(
                 total_time_second,
                 rest_time_second
@@ -158,6 +164,9 @@ class TimerVoiceController(QObject):
             print('total: ',total_time_second)
             print('rest: ',rest_time_second)
             print('===============================')
+
+        else:
+            self.voiceFailedSignal.emit()
 
     def load_assistant(self):
         if self._voice_handler:
