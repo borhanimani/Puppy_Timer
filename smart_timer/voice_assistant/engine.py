@@ -56,9 +56,9 @@ class VoiceEngine:
                 self.recognizer = KaldiRecognizer(self.model,SAMPLE_RATE)
                 self.stop_event.clear()
                 self.running = True
+                self.audio.start()
                 self.thread = threading.Thread(target=self.worker,name="VoiceRecognitionThread")
                 self.thread.start()
-                self.audio.start()
 
             except Exception:
                 self._stop_internal()
@@ -154,6 +154,9 @@ class VoiceEngine:
 
     def stop(self):
         with self.lock:
+            if not self.running:
+                return
+
             self._stop_internal()
 
     # ==================================================
