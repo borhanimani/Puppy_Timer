@@ -1,14 +1,20 @@
+from PySide6.QtCore import QObject, Signal
 from voice_assistant.handler import VoiceAssistantHandler
-from controller.timer_controller import TimerController
 from controller.keywords import *
 
-
-class TimerVoiceController:
+class TimerVoiceController(QObject):
+    createTimerSignal = Signal(int, int)
+    startTimerSignal = Signal()
+    deleteTimerSignal = Signal()
     _Assistant_called = False
 
-    def __init__(self, timer_controller = TimerController):
-        self._timer_controller = timer_controller
+    def __init__(self, ui_handler):
+
+        super().__init__()
+
         self._voice_handler = None
+        self._ui_handler = ui_handler 
+
 
     def get_number(self, word1, word2):
         if word1 in NUMBERS_EN:
@@ -37,6 +43,9 @@ class TimerVoiceController:
 
         if word in COMMAND_START_EN:
             return 'start'
+
+        if word in COMMAND_DELETE_EN:
+            return 'delete'
 
         return None
 
@@ -118,8 +127,13 @@ class TimerVoiceController:
 
             if command == "start":
                 command_identified = False
+                self.startTimerSignal.emit()
                 return
-                # call a func
+
+            if command == 'delete':
+                command_identified = False
+                self.deleteTimerSignal.emit()
+                return
 
             if (number_identified and time_unit_identified and time_mode_identifed):
                 command_identified = False
@@ -135,6 +149,11 @@ class TimerVoiceController:
                     rest_time_second = self.time_in_second(number, time_unit)
 
         if command_is_real:
+            # self._ui_handler.create_ui_timer(total_time_second,rest_time_second)
+            self.createTimerSignal.emit(
+                total_time_second,
+                rest_time_second
+            )
             print('===============================')
             print('total: ',total_time_second)
             print('rest: ',rest_time_second)
@@ -145,7 +164,9 @@ class TimerVoiceController:
         self._voice_handler.run_engine()
 
     def stop_assistant(self):
-        self._voice_handler.stop_engine()
-        print("Assistant Stoped.")
+        if self._voice_handler:
+            self._voice_handler.stop_engine()
+            self._voice_handler = None
+            print("Assistant Stoped.")
 
 

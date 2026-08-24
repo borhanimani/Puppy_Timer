@@ -73,7 +73,7 @@ class TimerController(QObject):
         # --------------------------------------------------
 
         if self.remainingSeconds <= 0:
-            self.remainingSeconds = self.workSeconds
+            self.remainingSeconds = self.totalSeconds
             self.resting = False
 
         self.working = True
@@ -97,49 +97,34 @@ class TimerController(QObject):
         if not self.working:
             return
 
+
         self.remainingSeconds -= 1
+
 
         self.timeChanged.emit(
             self.remainingSeconds
         )
 
+
         # --------------------------------------------------
         # WORK FINISHED
         # --------------------------------------------------
 
+        if (
+            self.remainingSeconds == self.restSeconds
+            and self.restSeconds > 0
+        ):
+
+            self.workTimeFinished.emit()
+
+
+        # --------------------------------------------------
+        # TIMER FINISHED
+        # --------------------------------------------------
+
         if self.remainingSeconds <= 0:
 
-            if not self.resting:
-
-                self.workTimeFinished.emit()
-
-                if self.restSeconds > 0:
-
-                    self.resting = True
-
-                    self.remainingSeconds = (
-                        self.restSeconds
-                    )
-
-                    self.stateChanged.emit(
-                        "rest"
-                    )
-
-                    self.timeChanged.emit(
-                        self.remainingSeconds
-                    )
-
-                else:
-
-                    self.finish()
-
-            # --------------------------------------------------
-            # REST FINISHED
-            # --------------------------------------------------
-
-            else:
-
-                self.finish()
+            self.finish()
 
     # ======================================================
     # FINISH
@@ -172,7 +157,7 @@ class TimerController(QObject):
         self.working = False
         self.resting = False
 
-        self.remainingSeconds = self.workSeconds
+        self.remainingSeconds = self.totalSeconds
 
         self.timeChanged.emit(
             self.remainingSeconds
@@ -194,7 +179,7 @@ class TimerController(QObject):
         self.resting = False
 
         self.remainingSeconds = (
-            self.workSeconds
+            self.totalSeconds
         )
 
         self.timeChanged.emit(

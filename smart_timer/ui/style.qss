@@ -1,0 +1,391 @@
+/* ==========================================================
+   GLOBAL
+   ========================================================== */
+
+QMainWindow {
+    background: #F8F7FC;
+}
+
+QWidget {
+    font-family: "Segoe UI";
+    color: #29263D;
+}
+
+
+/* ==========================================================
+   BRAND
+   ========================================================== */
+
+#brand {
+    font-size: 28px;
+    font-weight: 700;
+    color: #29263D;
+}
+
+#brandSubtitle {
+    font-size: 11px;
+    color: #918CA3;
+}
+
+
+/* ==========================================================
+   SECTION
+   ========================================================== */
+
+#sectionTitle {
+    font-size: 19px;
+    font-weight: 650;
+    color: #302C47;
+}
+
+
+/* ==========================================================
+   TIMER CARD
+   ========================================================== */
+
+#timerCard {
+    background: #FFFFFF;
+    border: 1px solid #E8E5F0;
+    border-radius: 20px;
+}
+
+#timerCard:hover {
+    border: 1px solid #D9D3F0;
+}
+
+
+/* ==========================================================
+   TIMER TITLE
+   ========================================================== */
+
+#timerTitle {
+    font-size: 16px;
+    font-weight: 650;
+    color: #302C47;
+}
+
+#timerDescription {
+    font-size: 12px;
+    color: #928EA1;
+}
+
+
+/* ==========================================================
+   TIMER
+   ========================================================== */
+
+#cardTime {
+    font-size: 54px;
+    font-weight: 700;
+    color: #5D50C9;
+    padding-top: 5px;
+    padding-bottom: 5px;
+}
+
+
+/* ==========================================================
+   PRIMARY BUTTON
+   ========================================================== */
+
+#primaryButton {
+    background: #6C5CE7;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 13px;
+    min-height: 44px;
+    font-size: 13px;
+    font-weight: 650;
+    padding-left: 18px;
+    padding-right: 18px;
+}
+
+#primaryButton:hover {
+    background: #5D50D0;
+}
+
+#primaryButton:pressed {
+    background: #5145B9;
+}
+
+#primaryButton:disabled {
+    background: #C8C3E7;
+    color: #F7F6FC;
+}
+
+
+/* ==========================================================
+   SECONDARY BUTTON
+   ========================================================== */
+
+#secondaryButton {
+    background: #EEEAFE;
+    color: #5D50C9;
+    border: none;
+    border-radius: 11px;
+    padding: 8px 15px;
+    font-size: 12px;
+    font-weight: 650;
+}
+
+#secondaryButton:hover {
+    background: #E4DFFA;
+}
+
+#secondaryButton:pressed {
+    background: #D9D2F4;
+}
+
+#secondaryButton:disabled {
+    background: #EDEBF4;
+    color: #AAA5B8;
+}
+
+
+/* ==========================================================
+   BACK BUTTON
+   ========================================================== */
+
+#backButton {
+    background: transparent;
+    border: none;
+    color: #7D788D;
+    font-size: 13px;
+    padding: 4px 0;
+}
+
+#backButton:hover {
+    color: #6C5CE7;
+}
+
+
+/* ==========================================================
+   DELETE
+   ========================================================== */
+
+#deleteButton {
+    background: #FFF1F0;
+    color: #C77777;
+    border: none;
+    border-radius: 9px;
+}
+
+#deleteButton:hover {
+    background: #FDE4E2;
+}
+
+#deleteButton:pressed {
+    background: #F8D8D5;
+}
+
+
+/* ==========================================================
+   EMPTY STATE
+   ========================================================== */
+
+#emptyState {
+    background: #F2F0F8;
+    border: 1px dashed #D9D4E8;
+    border-radius: 18px;
+    min-height: 92px;
+    color: #918CA0;
+    font-size: 13px;
+}
+
+
+/* ==========================================================
+   MICROPHONE
+   ========================================================== */
+
+#micStatus {
+    font-size: 11px;
+    font-weight: 600;
+    color: #7D788D;
+}
+
+#micButton {
+    background: #EEEAFE;
+    border: none;
+    border-radius: 8px;
+    padding: 0px;
+}
+
+#micButton:hover {
+    background: #E4DFFA;
+}
+
+#micButton:pressed {
+    background: #D9D2F4;
+}
+
+#micLed {
+    min-width: 8px;
+    max-width: 8px;
+    min-height: 8px;
+    max-height: 8px;
+    border-radius: 4px;
+}
+
+#micLed[status="off"] {
+    background: #D98B8B;
+}
+
+#micLed[status="on"] {
+    background: #62C89A;
+}
+
+
+/* ==========================================================
+   ASSISTANT
+   ========================================================== */
+
+#assistantTitle {
+    font-size: 16px;
+    font-weight: 650;
+    color: #3A3453;
+}
+
+#assistantHint {
+    font-size: 11px;
+    color: #9A95A8;
+}
+
+
+/* ==========================================================
+   ADD TIMER PAGE
+   ========================================================== */
+
+#pageTitle {
+    font-size: 29px;
+    font-weight: 700;
+    color: #29263D;
+}
+
+#pageSubtitle {
+    font-size: 13px;
+    color: #918CA3;
+}
+
+
+/* ==========================================================
+   INPUTS
+   ========================================================== */
+
+QSpinBox {
+    background: #FFFFFF;
+    color: #302C47;
+    border: 1px solid #E2DFEA;
+    border-radius: 14px;
+    padding-left: 14px;
+    padding-right: 48px;
+    font-size: 15px;
+    font-weight: 600;
+    min-height: 46px;
+}
+
+QSpinBox:hover {
+    border: 1px solid #D3CDEE;
+}
+
+QSpinBox:focus {
+    border: 1px solid #8B7EE8;
+}
+
+
+/* ==========================================================
+   STACK
+   ========================================================== */
+
+QStackedWidget {
+    background: #F8F7FC;
+}
+
+/* ==========================================================
+   MODERN SPIN BOX
+   ========================================================== */
+
+QSpinBox {
+    background: #FFFFFF;
+    color: #302C47;
+
+    border: 1px solid #E2DFEA;
+    border-radius: 14px;
+
+    padding-left: 16px;
+    padding-right: 8px;
+
+    font-size: 15px;
+    font-weight: 600;
+
+    min-height: 46px;
+}
+
+QSpinBox:hover {
+    border: 1px solid #D3CDEE;
+}
+
+QSpinBox:focus {
+    border: 1px solid #8B7EE8;
+}
+
+
+/* ----------------------------------------------------------
+   UP / DOWN BUTTONS
+   ---------------------------------------------------------- */
+
+QSpinBox::up-button {
+    subcontrol-origin: padding;
+    subcontrol-position: top right;
+    width: 36px;
+    height: 21px;
+    margin-top: 3px;
+    margin-right: 3px;
+    background: #EEEAFE;
+    border: none;
+    border-radius: 7px;
+}
+
+QSpinBox::up-button:hover {
+    background: #E4DFFA;
+}
+
+QSpinBox::up-button:pressed {
+    background: #D9D2F4;
+}
+
+QSpinBox::down-button {
+    subcontrol-origin: padding;
+    subcontrol-position: bottom right;
+    width: 36px;
+    height: 21px;
+    margin-bottom: 3px;
+    margin-right: 3px;
+    background: #EEEAFE;
+    border: none;
+    border-radius: 7px;
+}
+
+
+QSpinBox::down-button:hover {
+    background: #E4DFFA;
+}
+
+QSpinBox::down-button:pressed {
+    background: #D9D2F4;
+}
+
+
+/* ----------------------------------------------------------
+   ARROWS
+   ---------------------------------------------------------- */
+
+QSpinBox::up-arrow {
+    image: url(assets/icons/chevron-up.svg);
+    width: 10px;
+    height: 10px;
+}
+
+QSpinBox::down-arrow {
+    image: url(assets/icons/chevron-down.svg);
+    width: 10px;
+    height: 10px;
+}

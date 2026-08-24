@@ -36,6 +36,13 @@ COMMAND_START_EN = [
     'star'
 ]
 
+COMMAND_DELETE_EN = [
+    'delete',
+    'remove',
+    'clear',
+    'cancel'
+]
+
 TIME_WORK_MODE_EN = [
     'timer',
     'total',
