@@ -1085,6 +1085,14 @@ class MainWindow(QMainWindow):
             self.delete_timer_from_voice
         )
 
+        self.timer_voice_controller.voiceFailedSignal.connect(
+            self.show_voice_error
+        )
+
+        self.timer_voice_controller.voiceSuccessSignal.connect(
+            self.clear_voice_message
+        )
+
         self.wake_word_controller = (
             WakeWordController(
                 self.on_wake_word_detected
@@ -1105,11 +1113,23 @@ class MainWindow(QMainWindow):
 
         self.setup_ui()
 
-        # self.wake_sound = QSoundEffect(self)
-        # wake_path = SOUND_DIR / "wake_word.wav"
+        self.wake_sound = QSoundEffect(self)
+        wake_path = SOUND_DIR/ "wake_word.wav"
 
-        # if wake_path.exists():
-        #     self.wake_sound.setSource(QUrl.fromLocalFile(str(wake_path)))
+        if wake_path.exists():
+            self.wake_sound.setSource(QUrl.fromLocalFile(str(wake_path)))
+            self.wake_sound.setVolume(0.8)
+
+    # ======================================================
+    # SHOW ERROR
+    # ======================================================
+    
+    def show_voice_error(self):
+        self.assistant_message.setText("Sorry, I didn't understand")
+        self.assistant_message.show()
+
+    def clear_voice_message(self):
+        self.assistant_message.hide()
 
     # ======================================================
     # SETUP UI
@@ -1365,6 +1385,18 @@ class MainWindow(QMainWindow):
             assistant_container
         )
 
+        self.assistant_message = QLabel(
+            "Sorry, I didn't understand"
+        )
+
+        self.assistant_message.setObjectName(
+            "assistantMessage"
+        )
+
+        self.assistant_message.setAlignment(Qt.AlignCenter)
+        self.assistant_message.hide()
+        layout.addWidget(self.assistant_message)
+
         hint = QLabel(
             'Say "Hey Puppy" to get started'
         )
@@ -1567,12 +1599,15 @@ class MainWindow(QMainWindow):
 
         print("MAIN WINDOW >>> WAKE WORD DETECTED")
 
+        if self.wake_sound.source().isValid():
+            self.wake_sound.play()
+
         self.assistant.set_glow_color(
             QColor(
-                98,
-                200,
-                154,
-                90
+                60,
+                230,
+                120,
+                150
             )
         )
 
@@ -1597,6 +1632,7 @@ class MainWindow(QMainWindow):
         # Timer Voice START
         # --------------------------------------------------
 
+        self.clear_voice_message()
         self.timer_voice_controller.load_assistant()
 
     # ======================================================
