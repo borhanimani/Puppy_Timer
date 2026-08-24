@@ -28,8 +28,10 @@ from PySide6.QtWidgets import (
     QStackedWidget,
     QSpinBox,
     QSizePolicy,
+    QToolButton,
 )
 
+from ui.mini_window import MiniWindow
 from controller.timer_controller import TimerController
 from controller.timer_voice_contoller import TimerVoiceController
 from controller.wake_word_controller import WakeWordController
@@ -1047,7 +1049,7 @@ class MainWindow(QMainWindow):
 
         self.resize(
             960,
-            670,
+            690,
         )
 
         self.setMinimumSize(
@@ -1113,12 +1115,30 @@ class MainWindow(QMainWindow):
 
         self.setup_ui()
 
+        self.mini_window = MiniWindow(self)
+        # self.mini_window.show()
+
         self.wake_sound = QSoundEffect(self)
         wake_path = SOUND_DIR/ "wake_word.wav"
 
         if wake_path.exists():
             self.wake_sound.setSource(QUrl.fromLocalFile(str(wake_path)))
             self.wake_sound.setVolume(0.8)
+
+
+    # ======================================================
+    # MINI WINDOWS
+    # ======================================================
+
+    def update_mini_timer(self, seconds):
+        minutes = seconds // 60
+        sec = seconds % 60
+        text = f"{minutes:02}:{sec:02}"
+        self.mini_window.set_timer(text)
+
+    def show_mini_window(self):
+        self.mini_window.show()
+        self.hide()
 
     # ======================================================
     # SHOW ERROR
@@ -1238,6 +1258,33 @@ class MainWindow(QMainWindow):
         )
 
         header.addStretch()
+
+        self.mini_button = QToolButton()
+
+        self.mini_button.setObjectName(
+            "windowButton"
+        )
+
+        self.mini_button.setIcon(
+            icon("box-arrow-up-right.svg")
+        )
+
+        self.mini_button.setIconSize(
+            QSize(18, 18)
+        )
+
+        self.mini_button.setFixedSize(
+            34,
+            34
+        )
+
+        self.mini_button.clicked.connect(
+            self.show_mini_window
+        )
+
+        # header.addWidget(
+        #     self.mini_button
+        # )
 
         # --------------------------------------------------
         # MICROPHONE
@@ -1388,6 +1435,15 @@ class MainWindow(QMainWindow):
         self.assistant_message = QLabel(
             "Sorry, I didn't understand"
         )
+        font = self.assistant_message.font()
+        # font.setBold(True)
+        font.setPointSize(13)
+        self.assistant_message.setFont(font)
+        self.assistant_message.setStyleSheet(
+            """
+            color: #555555;
+            """
+        )
 
         self.assistant_message.setObjectName(
             "assistantMessage"
@@ -1411,6 +1467,18 @@ class MainWindow(QMainWindow):
 
         layout.addWidget(
             hint
+        )
+
+        window_button_layout = QHBoxLayout()
+
+        window_button_layout.addStretch()
+
+        window_button_layout.addWidget(
+            self.mini_button
+        )
+
+        layout.addLayout(
+            window_button_layout
         )
 
         return page
@@ -1481,7 +1549,20 @@ class MainWindow(QMainWindow):
             self.delete_timer,
         )
 
+        self.timer_controller.timeChanged.connect(
+            self.update_mini_timer
+        )
+
         self.current_timer_card = card
+
+        self.update_mini_timer(
+            total
+        )
+
+        self.mini_window.set_timer_info(
+            work,
+            rest
+        )
 
         self.timer_container.addWidget(
             card
@@ -1583,6 +1664,10 @@ class MainWindow(QMainWindow):
             "listening"
         )
 
+        self.mini_window.set_status(
+            "🟣 Listening"
+        )
+
         # --------------------------------------------------
         # فقط Wake Word شروع شود
         # --------------------------------------------------
@@ -1598,6 +1683,10 @@ class MainWindow(QMainWindow):
     def on_wake_word_detected(self):
 
         print("MAIN WINDOW >>> WAKE WORD DETECTED")
+
+        self.mini_window.set_active(
+            True
+        )
 
         if self.wake_sound.source().isValid():
             self.wake_sound.play()
@@ -1643,6 +1732,14 @@ class MainWindow(QMainWindow):
 
         print(
             "MICROPHONE >>> OFF"
+        )
+
+        self.mini_window.set_active(
+            False
+        )
+
+        self.mini_window.set_status(
+            "⚪ Sleep"
         )
 
         # --------------------------------------------------
@@ -1716,6 +1813,15 @@ class MainWindow(QMainWindow):
         self.current_timer_card = None
 
         self.timer_exists = False
+
+        self.mini_window.set_timer(
+            "--:--"
+        )
+
+        self.mini_window.set_timer_info(
+            "",
+            ""
+        )
 
         self.empty_label.show()
 
