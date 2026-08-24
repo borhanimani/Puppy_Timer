@@ -28,6 +28,7 @@ class VoiceEngine:
         self.vad = VoiceActivityDetector(threshold=500.0)
         self.audio = MicrophoneManager(self.audio_callback,SAMPLE_RATE,BLOCK_SIZE)
         self.thread = None
+        self.start_thread = None
         self.lock = threading.Lock()
 
         # -----------------------------
@@ -46,23 +47,39 @@ class VoiceEngine:
     # ==================================================
 
     def start(self):
+        if self.running:
+            return
+
+        self.start_thread = threading.Thread(
+            target=self._start_worker,
+            name="VoiceStartThread",
+            daemon=True
+        )
+        self.start_thread.start()
+
+    def _start_worker(self):
         with self.lock:
             if self.running:
                 return
 
             try:
-                print("Loading Vosk model...")
-                self.model = Model(self.model_path)
-                self.recognizer = KaldiRecognizer(self.model,SAMPLE_RATE)
+                print("Loading Vosk Model...")
+
+                self.model= Model(self.model_path)
+                self.recognizer = KaldiRecognizer(self.model, SAMPLE_RATE)
                 self.stop_event.clear()
                 self.running = True
                 self.audio.start()
-                self.thread = threading.Thread(target=self.worker,name="VoiceRecognitionThread")
+                self.thread = threading.Thread(
+                    target=self.worker,
+                    name="VoiceRecognitionThread",
+                    daemon=True
+                )
                 self.thread.start()
 
-            except Exception:
+            except Exception as e:
+                print("Voice start error:",e)
                 self._stop_internal()
-                raise
 
     # ==================================================
     # MICROPHONE CALLBACK
@@ -127,6 +144,12 @@ class VoiceEngine:
     # ==================================================
 
     def _stop_internal(self):
+        if self.start_thread:
+            if self.start_thread.is_alive():
+                self.stop_event.set()
+                self.start_thread = None
+
+
         self.running = False
         self.stop_event.set()
 
