@@ -35,6 +35,7 @@ from ui.mini_window import MiniWindow
 from controller.timer_controller import TimerController
 from controller.timer_voice_contoller import TimerVoiceController
 from controller.wake_word_controller import WakeWordController
+from assets.sound_lib_paths import *
 
 
 # ==========================================================
@@ -42,9 +43,8 @@ from controller.wake_word_controller import WakeWordController
 # ==========================================================
 
 BASE_DIR = Path(__file__).resolve().parent.parent
-
 ICON_DIR = BASE_DIR / "assets" / "icons"
-SOUND_DIR = BASE_DIR / "assets" / "sounds"
+
 
 
 def icon(name):
@@ -521,11 +521,11 @@ class TimerCard(QFrame):
         )
 
         work_sound_path = (
-            SOUND_DIR / "work.wav"
+            WAV_WORK_SOUND
         )
 
         finish_sound_path = (
-            SOUND_DIR / "finish.wav"
+            WAV_FINISH_SOUND
         )
 
         if work_sound_path.exists():
@@ -1119,7 +1119,7 @@ class MainWindow(QMainWindow):
         # self.mini_window.show()
 
         self.wake_sound = QSoundEffect(self)
-        wake_path = SOUND_DIR/ "wake_word.wav"
+        wake_path = WAV_WAKE_SOUND
 
         if wake_path.exists():
             self.wake_sound.setSource(QUrl.fromLocalFile(str(wake_path)))
