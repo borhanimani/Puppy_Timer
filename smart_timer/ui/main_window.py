@@ -1849,3 +1849,5 @@ class MainWindow(QMainWindow):
         self.timer_controller.stop()
 
         event.accept()
+
+        
