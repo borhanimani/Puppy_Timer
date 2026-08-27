@@ -49,3 +49,4 @@ The window can be moved to a convenient position on the screen, allowing users t
 The visual design process involved using Prompt engineering and prompt design, considering different UI/UX parameters and the needs.
 
 ##   
+[< previous page](02_architecture.md)   &nbsp;&nbsp;&nbsp; [next page >](04_command_processing.md)
