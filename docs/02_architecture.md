@@ -25,10 +25,12 @@ This structure also makes it possible to use different libraries or implementati
 The Voice Assistant does not directly control the timer. Instead, it provides processed text to the Timer Controller, keeping voice processing separate from application-specific command processing.
 
 ### Command Processing
-The Timer Controller is responsible for interpreting the text produced by the Voice Assistant and converting it into timer commands.
-A custom text-processing algorithm was developed for this part of the project. The algorithm analyzes the recognized text, identifies relevant commands and time-related information, and converts them into structured instructions that the timer system can execute.
-This component was also developed as a practical exercise in algorithm design, allowing the concepts learned through previous coursework in algorithm design to be applied to a real-world application.
-Keeping command processing separate from speech recognition allows the same command-processing system to potentially receive text from other input sources in the future.   
+
+After the Voice Assistant converts the user's speech into text, the text needs to be interpreted before the timer can use it.
+The Timer Controller uses a custom command-processing algorithm that analyzes the recognized text, identifies the intended timer operation, extracts relevant values such as work and rest durations, and converts them into structured commands that the timer can understand and execute.
+Keeping command processing separate from speech recognition allows the command-processing system to potentially receive text from other input sources in the future. This part of the project was also an opportunity to apply concepts I had previously learned about algorithm design to a practical problem.
+   
+The design and processing flow of this algorithm are described in more detail in [Command Processing](04_command_processing.md).
 
 ### Keyword Configuration
 The voice command processing system uses a separate keyword configuration file to define the words and phrases that can be recognized as commands, time units, numbers, and other relevant inputs.
