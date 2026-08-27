@@ -13,3 +13,6 @@ I also wanted Puppy Timer to work completely offline, so it could be used withou
 At the same time, Puppy Timer became an opportunity to challenge myself and learn new technologies and concepts while building something that actually solved a problem I had encountered myself.
    
 The result is Puppy Timer: a personal project built not only as a timer, but as an experiment in creating a more practical, accessible, offline, and efficient way to manage timed activities.
+
+##   
+[next page >](01_requirements.md)
