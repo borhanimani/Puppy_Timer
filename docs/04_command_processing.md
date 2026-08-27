@@ -53,3 +53,12 @@ INPUT: recognized text
 
    Otherwise:
       Report that the command could not be processed.
+```   
+
+## Complexity
+The command-processing algorithm has a time complexity of **O(n)**, where `n` is the number of words in the input text.
+Each word is processed once, while the keyword and number lookups use dictionary operations with an average time complexity of **O(1)**.
+The space complexity is **O(n)** because the input text is split into a list of words before processing.
+
+
+##   
