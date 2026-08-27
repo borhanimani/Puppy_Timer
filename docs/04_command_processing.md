@@ -62,3 +62,4 @@ The space complexity is **O(n)** because the input text is split into a list of 
 
 
 ##   
+[< previous page](03_design.md)   &nbsp;&nbsp;&nbsp; [next page >](05_technologies.md)
