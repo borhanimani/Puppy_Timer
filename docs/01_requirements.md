@@ -87,4 +87,4 @@ The application should have a modular structure that makes it easier to maintain
 
 
 ##   
-[< previous page](00_motivation.md)   &nbsp;&nbsp;&nbsp; fdf
+[< previous page](00_motivation.md)   &nbsp;&nbsp;&nbsp; [next page >](02_architecture.md)
