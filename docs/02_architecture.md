@@ -71,3 +71,4 @@ An audio queue is also used between audio capture and processing. This provides 
 The separation of these operations also makes the individual systems easier to control and shut down safely.
 
 ##    
+[< previous page](01_requirements.md)   &nbsp;&nbsp;&nbsp; [next page >](03_design.md)
