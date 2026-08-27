@@ -13,4 +13,4 @@ SOUND_DIR = BASE_DIR / "sounds"
 
 WAV_WORK_SOUND = SOUND_DIR / "work.wav"
 WAV_FINISH_SOUND = SOUND_DIR / "finish.wav"
-WAV_WAKE_SOUND = SOUND_DIR / "wake_word.wav"
+WAV_AI_SOUND = SOUND_DIR / "wake_word.wav"
