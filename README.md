@@ -4,8 +4,10 @@
 
 Puppy Timer is an offline smart timer application with a voice assistant, designed to help users manage focused work and rest sessions through both a graphical interface and voice commands.
 
-The application is built with **Python** and **PySide6**, **Bootstrap Icons** with **offline speech recognition** powered by **Vosk** and **Sounddevice**.   
-
+The application is built with **Python** and **PySide6**, **Bootstrap Icons** with **offline speech recognition** powered by **Vosk** and **Sounddevice**.    
+   
+You can read about the motivation behind Puppy Timer in the [Motivation](docs/00_motivation.md) document.   
+   
 - go to [Installation Guide](INSTALLATION.md)
 
 ## Features  
@@ -21,3 +23,20 @@ The application is built with **Python** and **PySide6**, **Bootstrap Icons** wi
 ## AI & Voice Assistant
 
 Puppy's voice assistant uses **Vosk** for offline speech recognition.
+
+## Documentation
+
+[View the project documentation](docs/)
+
+## Screenshots
+
+[View the screenshots](docs/images/screenshots/)
+
+## License
+
+[View the project license](LICENSE.md)
+
+## Third-Party Licenses
+
+[View the third-party licenses](THIRD_PARTY_LICENSES.md)
+
