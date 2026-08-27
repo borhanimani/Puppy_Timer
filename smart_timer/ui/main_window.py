@@ -46,7 +46,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 ICON_DIR = BASE_DIR / "assets" / "icons"
 
 
-
 def icon(name):
 
     path = ICON_DIR / name
@@ -69,7 +68,7 @@ class AssistantCircle(QWidget):
 
         self.setFixedSize(
             160,
-            160
+            160,
         )
 
         self.state = "idle"
@@ -78,7 +77,7 @@ class AssistantCircle(QWidget):
             150,
             130,
             235,
-            60
+            60,
         )
 
         self._glow = 0.0
@@ -89,29 +88,28 @@ class AssistantCircle(QWidget):
         )
 
         self.animation.setDuration(
-            1200
+            1200,
         )
 
         self.animation.setStartValue(
-            0.0
+            0.0,
         )
 
         self.animation.setEndValue(
-            1.0
+            1.0,
         )
 
         self.animation.setLoopCount(
-            -1
+            -1,
         )
 
         self.animation.setEasingCurve(
-            QEasingCurve.InOutSine
+            QEasingCurve.InOutSine,
         )
 
     def set_glow_color(self, color):
 
         self.glow_color = color
-
         self.update()
 
     def get_glow(self):
@@ -121,7 +119,6 @@ class AssistantCircle(QWidget):
     def set_glow(self, value):
 
         self._glow = value
-
         self.update()
 
     glow = Property(
@@ -140,12 +137,12 @@ class AssistantCircle(QWidget):
             "thinking",
         ):
 
-            self.animation.start()
+            if self.animation.state() != QPropertyAnimation.Running:
+                self.animation.start()
 
         else:
 
             self.animation.stop()
-
             self._glow = 0.0
 
         self.update()
@@ -155,14 +152,8 @@ class AssistantCircle(QWidget):
         painter = QPainter(self)
 
         painter.setRenderHint(
-            QPainter.Antialiasing
+            QPainter.Antialiasing,
         )
-
-        center = self.rect().center()
-
-        # --------------------------------------------------
-        # GLOW
-        # --------------------------------------------------
 
         if self.state in (
             "listening",
@@ -171,11 +162,11 @@ class AssistantCircle(QWidget):
         ):
 
             painter.setPen(
-                Qt.NoPen
+                Qt.NoPen,
             )
 
             painter.setBrush(
-                self.glow_color
+                self.glow_color,
             )
 
             painter.drawEllipse(
@@ -183,14 +174,6 @@ class AssistantCircle(QWidget):
                 0,
                 160,
                 160,
-            )
-
-            # --------------------------------------------------
-            # OUTER CIRCLE
-            # --------------------------------------------------
-
-            painter.setPen(
-                Qt.NoPen
             )
 
             if self.state == "speaking":
@@ -230,10 +213,6 @@ class AssistantCircle(QWidget):
                 150,
             )
 
-        # --------------------------------------------------
-        # INNER CIRCLE
-        # --------------------------------------------------
-
         if self.state == "speaking":
 
             painter.setBrush(
@@ -271,10 +250,6 @@ class AssistantCircle(QWidget):
             124,
         )
 
-        # --------------------------------------------------
-        # TEXT
-        # --------------------------------------------------
-
         painter.setPen(
             QColor(
                 50,
@@ -286,24 +261,20 @@ class AssistantCircle(QWidget):
         font = painter.font()
 
         font.setPointSize(
-            21
+            21,
         )
 
         font.setBold(
-            True
+            True,
         )
 
         painter.setFont(
-            font
+            font,
         )
 
         if self.state == "speaking":
 
             text = "〰 〰"
-
-        elif self.state == "listening":
-
-            text = "Puppy"
 
         elif self.state == "thinking":
 
@@ -335,14 +306,9 @@ class MicrophoneStatus(QFrame):
         super().__init__(parent)
 
         self.muted = True
+        self.toggle_callback = toggle_callback
 
-        self.toggle_callback = (
-            toggle_callback
-        )
-
-        layout = QHBoxLayout(
-            self
-        )
+        layout = QHBoxLayout(self)
 
         layout.setContentsMargins(
             12,
@@ -352,32 +318,32 @@ class MicrophoneStatus(QFrame):
         )
 
         layout.setSpacing(
-            8
+            8,
         )
 
         self.led = QLabel()
 
         self.led.setObjectName(
-            "micLed"
+            "micLed",
         )
 
         self.status = QLabel(
-            "Muted"
+            "Muted",
         )
 
         self.status.setObjectName(
-            "micStatus"
+            "micStatus",
         )
 
         self.button = QPushButton()
 
         self.button.setObjectName(
-            "micButton"
+            "micButton",
         )
 
         self.button.setIcon(
             icon(
-                "mic-fill.svg"
+                "mic-fill.svg",
             )
         )
 
@@ -394,47 +360,38 @@ class MicrophoneStatus(QFrame):
         )
 
         self.button.setToolTip(
-            "Toggle microphone"
+            "Toggle microphone",
         )
 
         self.button.clicked.connect(
-            self.toggle_callback
+            self.toggle_callback,
         )
 
         layout.addWidget(
-            self.led
+            self.led,
         )
 
         layout.addWidget(
-            self.status
+            self.status,
         )
 
         layout.addWidget(
-            self.button
+            self.button,
         )
 
         self.update_state()
-
-    # ======================================================
-    # SET MUTED
-    # ======================================================
 
     def set_muted(self, muted):
 
         self.muted = muted
-
         self.update_state()
-
-    # ======================================================
-    # UPDATE STATE
-    # ======================================================
 
     def update_state(self):
 
         if self.muted:
 
             self.status.setText(
-                "Muted"
+                "Muted",
             )
 
             self.led.setProperty(
@@ -445,7 +402,7 @@ class MicrophoneStatus(QFrame):
         else:
 
             self.status.setText(
-                "Listening"
+                "Listening",
             )
 
             self.led.setProperty(
@@ -454,11 +411,11 @@ class MicrophoneStatus(QFrame):
             )
 
         self.led.style().unpolish(
-            self.led
+            self.led,
         )
 
         self.led.style().polish(
-            self.led
+            self.led,
         )
 
 
@@ -481,60 +438,35 @@ class TimerCard(QFrame):
         super().__init__(parent)
 
         self.setObjectName(
-            "timerCard"
+            "timerCard",
         )
 
-        self.timer_controller = (
-            timer_controller
-        )
+        self.timer_controller = timer_controller
 
-        self.total_seconds = (
-            total_seconds
-        )
-
-        self.work_seconds = (
-            work_seconds
-        )
-
-        self.rest_seconds = (
-            rest_seconds
-        )
+        self.total_seconds = total_seconds
+        self.work_seconds = work_seconds
+        self.rest_seconds = rest_seconds
 
         self.work_sound_played = False
-
         self.finished_sound_played = False
 
-        self.delete_callback = (
-            delete_callback
-        )
+        self.delete_callback = delete_callback
 
         # --------------------------------------------------
         # SOUNDS
         # --------------------------------------------------
 
-        self.work_sound = QSoundEffect(
-            self
-        )
+        self.work_sound = QSoundEffect(self)
+        self.finish_sound = QSoundEffect(self)
 
-        self.finish_sound = QSoundEffect(
-            self
-        )
-
-        work_sound_path = (
-            WAV_WORK_SOUND
-        )
-
-        finish_sound_path = (
-            WAV_FINISH_SOUND
-        )
+        work_sound_path = WAV_WORK_SOUND
+        finish_sound_path = WAV_FINISH_SOUND
 
         if work_sound_path.exists():
 
             self.work_sound.setSource(
                 QUrl.fromLocalFile(
-                    str(
-                        work_sound_path
-                    )
+                    str(work_sound_path)
                 )
             )
 
@@ -546,9 +478,7 @@ class TimerCard(QFrame):
 
             self.finish_sound.setSource(
                 QUrl.fromLocalFile(
-                    str(
-                        finish_sound_path
-                    )
+                    str(finish_sound_path)
                 )
             )
 
@@ -560,9 +490,7 @@ class TimerCard(QFrame):
         # LAYOUT
         # --------------------------------------------------
 
-        layout = QVBoxLayout(
-            self
-        )
+        layout = QVBoxLayout(self)
 
         layout.setContentsMargins(
             24,
@@ -572,23 +500,23 @@ class TimerCard(QFrame):
         )
 
         layout.setSpacing(
-            10
+            10,
         )
 
         top = QHBoxLayout()
 
         title = QLabel(
-            "Training Timer"
+            "Training Timer",
         )
 
         title.setObjectName(
-            "timerTitle"
+            "timerTitle",
         )
 
         delete_button = QPushButton()
 
         delete_button.setObjectName(
-            "deleteButton"
+            "deleteButton",
         )
 
         delete_button.setFixedSize(
@@ -598,30 +526,26 @@ class TimerCard(QFrame):
 
         delete_button.setIcon(
             icon(
-                "trash-fill.svg"
+                "trash-fill.svg",
             )
         )
 
-        delete_button.setIconSize(
-            delete_button.sizeHint()
-        )
-
         delete_button.setToolTip(
-            "Delete timer"
+            "Delete timer",
         )
 
         delete_button.clicked.connect(
-            self.delete_timer
+            self.delete_timer,
         )
 
         top.addWidget(
-            title
+            title,
         )
 
         top.addStretch()
 
         top.addWidget(
-            delete_button
+            delete_button,
         )
 
         description = QLabel(
@@ -630,75 +554,79 @@ class TimerCard(QFrame):
         )
 
         description.setObjectName(
-            "timerDescription"
+            "timerDescription",
         )
 
         description.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignCenter,
         )
 
         self.time_label = QLabel(
             self.format_time(
-                total_seconds
+                total_seconds,
             )
         )
 
         self.time_label.setObjectName(
-            "cardTime"
+            "cardTime",
         )
 
         self.time_label.setAlignment(
-            Qt.AlignCenter
+            Qt.AlignCenter,
         )
 
         self.start_button = QPushButton(
-            "Start Timer"
+            "Start Timer",
         )
 
         self.start_button.setObjectName(
-            "primaryButton"
+            "primaryButton",
         )
 
         self.start_button.setIcon(
             icon(
-                "play-fill.svg"
+                "play-fill.svg",
             )
         )
 
         self.start_button.clicked.connect(
-            self.start_timer
+            self.start_timer,
         )
 
         layout.addLayout(
-            top
+            top,
         )
 
         layout.addWidget(
-            description
+            description,
         )
 
         layout.addSpacing(
-            4
+            4,
         )
 
         layout.addWidget(
-            self.time_label
+            self.time_label,
         )
 
         layout.addSpacing(
-            4
+            4,
         )
 
         layout.addWidget(
-            self.start_button
+            self.start_button,
         )
 
         # --------------------------------------------------
-        # TIMER SIGNAL
+        # TIMER SIGNALS
         # --------------------------------------------------
 
         self.timer_controller.timeChanged.connect(
-            self.update_time
+            self.update_time,
+        )
+
+        self.timer_controller.timerFinished.connect(
+            self.timer_finished,
         )
 
     # ======================================================
@@ -708,15 +636,14 @@ class TimerCard(QFrame):
     def prepare_for_start(self):
 
         self.work_sound_played = False
-
         self.finished_sound_played = False
 
         self.start_button.setEnabled(
-            False
+            False,
         )
 
         self.start_button.setText(
-            "Timer Running"
+            "Timer Running",
         )
 
     # ======================================================
@@ -747,13 +674,9 @@ class TimerCard(QFrame):
 
         self.time_label.setText(
             self.format_time(
-                seconds
+                seconds,
             )
         )
-
-        # --------------------------------------------------
-        # WORK FINISHED
-        # --------------------------------------------------
 
         if (
             seconds == self.rest_seconds
@@ -767,14 +690,13 @@ class TimerCard(QFrame):
 
                 self.work_sound.play()
 
-        # --------------------------------------------------
-        # FINISHED
-        # --------------------------------------------------
+    # ======================================================
+    # TIMER FINISHED
+    # ======================================================
 
-        if (
-            seconds == 0
-            and not self.finished_sound_played
-        ):
+    def timer_finished(self):
+
+        if not self.finished_sound_played:
 
             self.finished_sound_played = True
 
@@ -782,13 +704,19 @@ class TimerCard(QFrame):
 
                 self.finish_sound.play()
 
-            self.start_button.setEnabled(
-                True
+        self.time_label.setText(
+            self.format_time(
+                self.total_seconds,
             )
+        )
 
-            self.start_button.setText(
-                "Start Again"
-            )
+        self.start_button.setEnabled(
+            True,
+        )
+
+        self.start_button.setText(
+            "Start Again",
+        )
 
     # ======================================================
     # DELETE
@@ -799,7 +727,7 @@ class TimerCard(QFrame):
         if self.delete_callback:
 
             self.delete_callback(
-                self
+                self,
             )
 
     # ======================================================
@@ -810,7 +738,6 @@ class TimerCard(QFrame):
     def format_time(seconds):
 
         minutes = seconds // 60
-
         seconds = seconds % 60
 
         return (
@@ -833,17 +760,10 @@ class AddTimerView(QWidget):
 
         super().__init__()
 
-        self.save_callback = (
-            save_callback
-        )
+        self.save_callback = save_callback
+        self.back_callback = back_callback
 
-        self.back_callback = (
-            back_callback
-        )
-
-        layout = QVBoxLayout(
-            self
-        )
+        layout = QVBoxLayout(self)
 
         layout.setContentsMargins(
             50,
@@ -853,7 +773,7 @@ class AddTimerView(QWidget):
         )
 
         layout.setSpacing(
-            18
+            18,
         )
 
         # --------------------------------------------------
@@ -863,21 +783,21 @@ class AddTimerView(QWidget):
         back_button = QPushButton()
 
         back_button.setObjectName(
-            "backButton"
+            "backButton",
         )
 
         back_button.setIcon(
             icon(
-                "arrow-left.svg"
+                "arrow-left.svg",
             )
         )
 
         back_button.setText(
-            "  Back"
+            "  Back",
         )
 
         back_button.clicked.connect(
-            self.back_callback
+            self.back_callback,
         )
 
         # --------------------------------------------------
@@ -885,19 +805,19 @@ class AddTimerView(QWidget):
         # --------------------------------------------------
 
         title = QLabel(
-            "Create a timer"
+            "Create a timer",
         )
 
         title.setObjectName(
-            "pageTitle"
+            "pageTitle",
         )
 
         subtitle = QLabel(
-            "Set up your training session."
+            "Set up your training session.",
         )
 
         subtitle.setObjectName(
-            "pageSubtitle"
+            "pageSubtitle",
         )
 
         # --------------------------------------------------
@@ -905,7 +825,7 @@ class AddTimerView(QWidget):
         # --------------------------------------------------
 
         work_label = QLabel(
-            "Focus duration"
+            "Focus duration",
         )
 
         self.work_input = QSpinBox()
@@ -916,11 +836,11 @@ class AddTimerView(QWidget):
         )
 
         self.work_input.setValue(
-            45
+            45,
         )
 
         self.work_input.setSuffix(
-            " sec"
+            " sec",
         )
 
         # --------------------------------------------------
@@ -928,7 +848,7 @@ class AddTimerView(QWidget):
         # --------------------------------------------------
 
         rest_label = QLabel(
-            "Rest duration"
+            "Rest duration",
         )
 
         self.rest_input = QSpinBox()
@@ -939,11 +859,11 @@ class AddTimerView(QWidget):
         )
 
         self.rest_input.setValue(
-            15
+            15,
         )
 
         self.rest_input.setSuffix(
-            " sec"
+            " sec",
         )
 
         # --------------------------------------------------
@@ -951,21 +871,21 @@ class AddTimerView(QWidget):
         # --------------------------------------------------
 
         save_button = QPushButton(
-            "Save Timer"
+            "Save Timer",
         )
 
         save_button.setObjectName(
-            "primaryButton"
+            "primaryButton",
         )
 
         save_button.setIcon(
             icon(
-                "check-lg.svg"
+                "check-lg.svg",
             )
         )
 
         save_button.clicked.connect(
-            self.save
+            self.save,
         )
 
         # --------------------------------------------------
@@ -973,55 +893,50 @@ class AddTimerView(QWidget):
         # --------------------------------------------------
 
         layout.addWidget(
-            back_button
+            back_button,
         )
 
         layout.addSpacing(
-            12
+            12,
         )
 
         layout.addWidget(
-            title
+            title,
         )
 
         layout.addWidget(
-            subtitle
+            subtitle,
         )
 
         layout.addSpacing(
-            12
+            12,
         )
 
         layout.addWidget(
-            work_label
+            work_label,
         )
 
         layout.addWidget(
-            self.work_input
+            self.work_input,
         )
 
         layout.addWidget(
-            rest_label
+            rest_label,
         )
 
         layout.addWidget(
-            self.rest_input
+            self.rest_input,
         )
 
         layout.addStretch()
 
         layout.addWidget(
-            save_button
+            save_button,
         )
-
-    # ======================================================
-    # SAVE
-    # ======================================================
 
     def save(self):
 
         work = self.work_input.value()
-
         rest = self.rest_input.value()
 
         total = work + rest
@@ -1044,12 +959,12 @@ class MainWindow(QMainWindow):
         super().__init__()
 
         self.setWindowTitle(
-            "Puppy Timer"
+            "Puppy Timer",
         )
 
         self.resize(
             960,
-            690,
+            730,
         )
 
         self.setMinimumSize(
@@ -1061,18 +976,14 @@ class MainWindow(QMainWindow):
         # TIMER CONTROLLER
         # ==================================================
 
-        self.timer_controller = (
-            TimerController()
-        )
+        self.timer_controller = TimerController()
 
         # ==================================================
         # VOICE CONTROLLERS
         # ==================================================
 
-        self.timer_voice_controller = (
-            TimerVoiceController(
-                self
-            )
+        self.timer_voice_controller = TimerVoiceController(
+            self
         )
 
         self.timer_voice_controller.createTimerSignal.connect(
@@ -1095,10 +1006,8 @@ class MainWindow(QMainWindow):
             self.clear_voice_message
         )
 
-        self.wake_word_controller = (
-            WakeWordController(
-                self.on_wake_word_detected
-            )
+        self.wake_word_controller = WakeWordController(
+            self.on_wake_word_detected
         )
 
         # ==================================================
@@ -1106,8 +1015,8 @@ class MainWindow(QMainWindow):
         # ==================================================
 
         self.timer_exists = False
-
         self.current_timer_card = None
+        self.initial_timer_seconds = 0
 
         # ==================================================
         # UI
@@ -1115,59 +1024,139 @@ class MainWindow(QMainWindow):
 
         self.setup_ui()
 
-        self.mini_window = MiniWindow(self)
-        # self.mini_window.show()
+        # ==================================================
+        # MINI WINDOW
+        # ==================================================
 
-        self.wake_sound = QSoundEffect(self)
-        wake_path = WAV_WAKE_SOUND
+        self.mini_window = MiniWindow(
+            self
+        )
+
+        # ==================================================
+        # TIMER SIGNAL
+        # ==================================================
+
+        self.timer_controller.timeChanged.connect(
+            self.update_mini_timer
+        )
+
+        # ==================================================
+        # WAKE WORD SOUND
+        # ==================================================
+
+        self.wake_sound = QSoundEffect(
+            self
+        )
+
+        wake_path = WAV_AI_SOUND
 
         if wake_path.exists():
-            self.wake_sound.setSource(QUrl.fromLocalFile(str(wake_path)))
-            self.wake_sound.setVolume(0.8)
 
+            self.wake_sound.setSource(
+                QUrl.fromLocalFile(
+                    str(wake_path)
+                )
+            )
+
+            self.wake_sound.setVolume(
+                0.8
+            )
+
+        # ==================================================
+        # VOICE ACTION SOUND
+        # ==================================================
+
+        self.voice_action_sound = QSoundEffect(
+            self
+        )
+
+        voice_action_path = WAV_AI_SOUND
+
+        if voice_action_path.exists():
+
+            self.voice_action_sound.setSource(
+                QUrl.fromLocalFile(
+                    str(voice_action_path)
+                )
+            )
+
+            self.voice_action_sound.setVolume(
+                0.8
+            )
 
     # ======================================================
-    # MINI WINDOWS
+    # VOICE ACTION SOUND
+    # ======================================================
+
+    def play_voice_action_sound(self):
+
+        if self.voice_action_sound.source().isValid():
+
+            self.voice_action_sound.play()
+
+    # ======================================================
+    # UPDATE MINI TIMER
     # ======================================================
 
     def update_mini_timer(self, seconds):
-        minutes = seconds // 60
-        sec = seconds % 60
-        text = f"{minutes:02}:{sec:02}"
-        self.mini_window.set_timer(text)
+
+        if seconds > 0:
+
+            display_seconds = seconds
+
+        elif (
+            seconds == 0
+            and self.timer_exists
+        ):
+
+            display_seconds = (
+                self.initial_timer_seconds
+            )
+
+        else:
+
+            display_seconds = 0
+
+        minutes = display_seconds // 60
+        sec = display_seconds % 60
+
+        text = (
+            f"{minutes:02d}:"
+            f"{sec:02d}"
+        )
+
+        self.mini_window.set_timer(
+            text
+        )
+
+    # ======================================================
+    # SHOW MINI WINDOW
+    # ======================================================
 
     def show_mini_window(self):
+
         self.mini_window.show()
         self.hide()
 
     # ======================================================
-    # SHOW ERROR
+    # SHOW VOICE ERROR
     # ======================================================
-    
+
     def show_voice_error(self):
-        self.assistant_message.setText("Sorry, I didn't understand")
+
+        self.assistant_message.setText(
+            "Sorry, I didn't understand"
+        )
+
         self.assistant_message.show()
 
     def clear_voice_message(self):
+
         self.assistant_message.hide()
 
     # ======================================================
     # SETUP UI
     # ======================================================
-
-    def delete_timer_from_voice(self):
-
-        if self.current_timer_card:
-
-            self.delete_timer(
-                self.current_timer_card
-            )
-
-        else:
-
-            print(
-                "VOICE: No timer to delete"
-            )
 
     def setup_ui(self):
 
@@ -1177,9 +1166,7 @@ class MainWindow(QMainWindow):
             self.stack
         )
 
-        self.main_view = (
-            self.create_main_view()
-        )
+        self.main_view = self.create_main_view()
 
         self.add_view = AddTimerView(
             self.save_timer,
@@ -1214,7 +1201,7 @@ class MainWindow(QMainWindow):
         )
 
         layout.setSpacing(
-            14
+            14,
         )
 
         # --------------------------------------------------
@@ -1266,25 +1253,26 @@ class MainWindow(QMainWindow):
         )
 
         self.mini_button.setIcon(
-            icon("box-arrow-up-right.svg")
+            icon(
+                "box-arrow-up-right.svg"
+            )
         )
 
         self.mini_button.setIconSize(
-            QSize(18, 18)
+            QSize(
+                18,
+                18,
+            )
         )
 
         self.mini_button.setFixedSize(
             34,
-            34
+            34,
         )
 
         self.mini_button.clicked.connect(
             self.show_mini_window
         )
-
-        # header.addWidget(
-        #     self.mini_button
-        # )
 
         # --------------------------------------------------
         # MICROPHONE
@@ -1352,9 +1340,7 @@ class MainWindow(QMainWindow):
         # TIMER CONTAINER
         # --------------------------------------------------
 
-        self.timer_container = (
-            QVBoxLayout()
-        )
+        self.timer_container = QVBoxLayout()
 
         self.timer_container.setSpacing(
             10
@@ -1416,9 +1402,7 @@ class MainWindow(QMainWindow):
 
         self.assistant = AssistantCircle()
 
-        assistant_container = (
-            QHBoxLayout()
-        )
+        assistant_container = QHBoxLayout()
 
         assistant_container.addStretch()
 
@@ -1432,13 +1416,24 @@ class MainWindow(QMainWindow):
             assistant_container
         )
 
+        # --------------------------------------------------
+        # ASSISTANT MESSAGE
+        # --------------------------------------------------
+
         self.assistant_message = QLabel(
             "Sorry, I didn't understand"
         )
+
         font = self.assistant_message.font()
-        # font.setBold(True)
-        font.setPointSize(13)
-        self.assistant_message.setFont(font)
+
+        font.setPointSize(
+            13
+        )
+
+        self.assistant_message.setFont(
+            font
+        )
+
         self.assistant_message.setStyleSheet(
             """
             color: #555555;
@@ -1449,9 +1444,19 @@ class MainWindow(QMainWindow):
             "assistantMessage"
         )
 
-        self.assistant_message.setAlignment(Qt.AlignCenter)
+        self.assistant_message.setAlignment(
+            Qt.AlignCenter
+        )
+
         self.assistant_message.hide()
-        layout.addWidget(self.assistant_message)
+
+        layout.addWidget(
+            self.assistant_message
+        )
+
+        # --------------------------------------------------
+        # HINT
+        # --------------------------------------------------
 
         hint = QLabel(
             'Say "Hey Puppy" to get started'
@@ -1469,6 +1474,10 @@ class MainWindow(QMainWindow):
             hint
         )
 
+        # --------------------------------------------------
+        # MINI BUTTON
+        # --------------------------------------------------
+
         window_button_layout = QHBoxLayout()
 
         window_button_layout.addStretch()
@@ -1484,12 +1493,11 @@ class MainWindow(QMainWindow):
         return page
 
     # ======================================================
-    # SHOW ADD TIMER PAGE
+    # SHOW ADD
     # ======================================================
 
     def show_add(self):
 
-        # اگر قبلاً timer داریم، صفحه ساخت باز نشود
         if self.timer_exists:
             return
 
@@ -1498,7 +1506,7 @@ class MainWindow(QMainWindow):
         )
 
     # ======================================================
-    # SHOW MAIN PAGE
+    # SHOW MAIN
     # ======================================================
 
     def show_main(self):
@@ -1508,7 +1516,7 @@ class MainWindow(QMainWindow):
         )
 
     # ======================================================
-    # CREATE TIMER
+    # SAVE TIMER
     # ======================================================
 
     def save_timer(
@@ -1521,6 +1529,8 @@ class MainWindow(QMainWindow):
         if self.timer_exists:
             return
 
+        self.initial_timer_seconds = total
+
         try:
 
             self.timer_controller.create(
@@ -1532,14 +1542,10 @@ class MainWindow(QMainWindow):
 
             print(
                 "Timer creation error:",
-                error
+                error,
             )
 
             return
-
-        # --------------------------------------------------
-        # CREATE CARD
-        # --------------------------------------------------
 
         card = TimerCard(
             self.timer_controller,
@@ -1547,10 +1553,6 @@ class MainWindow(QMainWindow):
             work,
             rest,
             self.delete_timer,
-        )
-
-        self.timer_controller.timeChanged.connect(
-            self.update_mini_timer
         )
 
         self.current_timer_card = card
@@ -1561,16 +1563,12 @@ class MainWindow(QMainWindow):
 
         self.mini_window.set_timer_info(
             work,
-            rest
+            rest,
         )
 
         self.timer_container.addWidget(
             card
         )
-
-        # --------------------------------------------------
-        # UPDATE UI
-        # --------------------------------------------------
 
         self.empty_label.hide()
 
@@ -1580,14 +1578,10 @@ class MainWindow(QMainWindow):
             False
         )
 
-        # --------------------------------------------------
-        # RETURN TO MAIN PAGE
-        # --------------------------------------------------
-
         self.show_main()
 
     # ======================================================
-    # UI HANDLER - CREATE TIMER
+    # CREATE TIMER - VOICE
     # ======================================================
 
     def create_ui_timer(
@@ -1599,6 +1593,8 @@ class MainWindow(QMainWindow):
         if self.timer_exists:
             return
 
+        self.play_voice_action_sound()
+
         work = total - rest
 
         self.save_timer(
@@ -1608,7 +1604,7 @@ class MainWindow(QMainWindow):
         )
 
     # ======================================================
-    # UI HANDLER - START TIMER
+    # START TIMER - VOICE
     # ======================================================
 
     def start_ui_timer(self):
@@ -1620,6 +1616,8 @@ class MainWindow(QMainWindow):
             )
 
             return
+
+        self.play_voice_action_sound()
 
         self.current_timer_card.start_from_voice()
 
@@ -1652,13 +1650,13 @@ class MainWindow(QMainWindow):
         )
 
         self.assistant.set_glow_color(
-        QColor(
-            150,
-            130,
-            235,
-            60
+            QColor(
+                150,
+                130,
+                235,
+                60,
+            )
         )
-)
 
         self.assistant.set_state(
             "listening"
@@ -1668,12 +1666,6 @@ class MainWindow(QMainWindow):
             "🟣 Listening"
         )
 
-        # --------------------------------------------------
-        # فقط Wake Word شروع شود
-        # --------------------------------------------------
-
-        # self.timer_voice_controller.stop_assistant()
-
         self.wake_word_controller.load_assistant()
 
     # ======================================================
@@ -1682,13 +1674,16 @@ class MainWindow(QMainWindow):
 
     def on_wake_word_detected(self):
 
-        print("MAIN WINDOW >>> WAKE WORD DETECTED")
+        print(
+            "MAIN WINDOW >>> WAKE WORD DETECTED"
+        )
 
         self.mini_window.set_active(
             True
         )
 
         if self.wake_sound.source().isValid():
+
             self.wake_sound.play()
 
         self.assistant.set_glow_color(
@@ -1696,32 +1691,18 @@ class MainWindow(QMainWindow):
                 60,
                 230,
                 120,
-                150
+                150,
             )
         )
 
-        # if hasattr(self, "wake_sound"):
-        #     self.wake_sound.play()
-
-        # --------------------------------------------------
-        # Wake Word STOP
-        # --------------------------------------------------
-
         self.wake_word_controller.stop_wake_word()
-
-        # --------------------------------------------------
-        # Assistant state
-        # --------------------------------------------------
 
         self.assistant.set_state(
             "listening"
         )
 
-        # --------------------------------------------------
-        # Timer Voice START
-        # --------------------------------------------------
-
         self.clear_voice_message()
+
         self.timer_voice_controller.load_assistant()
 
     # ======================================================
@@ -1742,21 +1723,9 @@ class MainWindow(QMainWindow):
             "⚪ Sleep"
         )
 
-        # --------------------------------------------------
-        # ALWAYS STOP WAKE WORD
-        # --------------------------------------------------
-
         self.wake_word_controller.stop_wake_word()
 
-        # --------------------------------------------------
-        # ALWAYS STOP TIMER VOICE
-        # --------------------------------------------------
-
         self.timer_voice_controller.stop_assistant()
-
-        # --------------------------------------------------
-        # UI
-        # --------------------------------------------------
 
         self.microphone.set_muted(
             True
@@ -1767,13 +1736,33 @@ class MainWindow(QMainWindow):
                 150,
                 130,
                 235,
-                60
+                60,
             )
         )
 
         self.assistant.set_state(
             "idle"
         )
+
+    # ======================================================
+    # DELETE TIMER - VOICE
+    # ======================================================
+
+    def delete_timer_from_voice(self):
+
+        if self.current_timer_card:
+
+            self.play_voice_action_sound()
+
+            self.delete_timer(
+                self.current_timer_card
+            )
+
+        else:
+
+            print(
+                "VOICE: No timer to delete"
+            )
 
     # ======================================================
     # DELETE TIMER
@@ -1784,21 +1773,9 @@ class MainWindow(QMainWindow):
         card,
     ):
 
-        # --------------------------------------------------
-        # STOP TIMER
-        # --------------------------------------------------
-
         self.timer_controller.stop()
 
-        # --------------------------------------------------
-        # RESET TIMER
-        # --------------------------------------------------
-
         self.timer_controller.reset()
-
-        # --------------------------------------------------
-        # REMOVE CARD
-        # --------------------------------------------------
 
         self.timer_container.removeWidget(
             card
@@ -1806,13 +1783,9 @@ class MainWindow(QMainWindow):
 
         card.deleteLater()
 
-        # --------------------------------------------------
-        # RESET STATE
-        # --------------------------------------------------
-
         self.current_timer_card = None
-
         self.timer_exists = False
+        self.initial_timer_seconds = 0
 
         self.mini_window.set_timer(
             "--:--"
@@ -1832,7 +1805,7 @@ class MainWindow(QMainWindow):
         self.show_main()
 
     # ======================================================
-    # ASSISTANT DEMO STATES
+    # ASSISTANT DEMO
     # ======================================================
 
     def demo_listening(self):
@@ -1869,21 +1842,9 @@ class MainWindow(QMainWindow):
             "MAIN WINDOW >>> CLOSING"
         )
 
-        # --------------------------------------------------
-        # STOP WAKE WORD
-        # --------------------------------------------------
-
         self.wake_word_controller.stop_wake_word()
 
-        # --------------------------------------------------
-        # STOP TIMER VOICE
-        # --------------------------------------------------
-
         self.timer_voice_controller.stop_assistant()
-
-        # --------------------------------------------------
-        # STOP TIMER
-        # --------------------------------------------------
 
         self.timer_controller.stop()
 
