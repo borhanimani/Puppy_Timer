@@ -1421,7 +1421,6 @@ class MainWindow(QMainWindow):
 
     def show_add(self):
 
-        # اگر قبلاً timer داریم، صفحه ساخت باز نشود
         if self.timer_exists:
             return
 
@@ -1582,10 +1581,6 @@ class MainWindow(QMainWindow):
         self.assistant.set_state(
             "listening"
         )
-
-        # --------------------------------------------------
-        # فقط Wake Word شروع شود
-        # --------------------------------------------------
 
         # self.timer_voice_controller.stop_assistant()
 
