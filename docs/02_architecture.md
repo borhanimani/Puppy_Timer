@@ -6,6 +6,8 @@ Puppy Timer is built around two main systems: the Timer System and the Voice Ass
 The Timer System is responsible for timer-related functionality and is divided into two main components: the Timer UI and the Timer Controller.
 The Voice Assistant System is responsible for capturing and processing voice input and converting speech into text. The Timer Controller then processes the resulting text and converts it into commands that can be understood and executed by the timer system.
 The main components are designed to remain as independent and loosely coupled as possible. This separation makes the system easier to maintain, reuse, test, and extend, while also making it possible to replace or adapt individual components without requiring major changes to the rest of the application.
+   
+[Puppy Timer Architecture](images/architecture/architecture-overview.png)
 
 ## Main Components
 
