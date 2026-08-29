@@ -43,7 +43,9 @@ Notes:
 - They are included only as part of the Puppy Timer application.
 - The original files have not been sold or redistributed separately.
 - Users should refer to Pixabay's Content License for complete terms.
-
+- Puppy Timer does not distribute original Pixabay audio files in the public source repository.
+- Users who add external assets are responsible for ensuring that those assets comply with their respective licenses.
+- Puppy Timer contributors are not responsible for third-party assets added, modified, or redistributed by users.
 
 ---
 
