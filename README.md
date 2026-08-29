@@ -42,4 +42,4 @@ or click on [View the project license](LICENSE.md)
 ## Third-Party Licenses
 
 see: docs/licenses/THIRD-PARTY-LICENSES.md      
-or click on [View the other licenses]
+or click on [View the other licenses](docs/licenses)
