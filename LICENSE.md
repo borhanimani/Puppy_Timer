@@ -18,13 +18,16 @@ project. Those components remain under their own respective licenses.
 You are allowed to:
 
 - View the source code for educational and review purposes.
-- Run the software for personal use.
+- Clone this repository for personal study and inspection.
+- Run official releases of Puppy Timer provided by the copyright holder.
 
 
 3. Restrictions
 
 Without explicit permission from the copyright holder, you may not:
 
+- Build, compile, package, or distribute modified or self-created versions of Puppy Timer.
+- Create executable files or other distributable versions from this source code.
 - Copy or redistribute this source code.
 - Publish modified versions of this project.
 - Use parts of this source code in another project.
