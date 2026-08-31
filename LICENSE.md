@@ -70,3 +70,12 @@ modification, redistribution, or illegal use of this software by others.
 Permission requests regarding redistribution, modification, commercial
 use, or other uses outside this license should be directed to the
 copyright holder.
+
+8. Application Across Project History
+
+All versions of the Puppy Timer source code, including the current version and previous versions contained in the repository's history, are governed by the latest version of the Puppy Timer License designated by the copyright holder.
+
+The copyright holder may update or replace this license from time to time. Unless expressly stated otherwise, any updated or replacement version of the Puppy Timer License shall apply to the Puppy Timer source code across its entire repository history, including versions made available before the updated or replacement license became effective.
+
+The publication of a new license version may expand, modify, or otherwise update the permissions and restrictions applicable to both current and previously released versions of the Puppy Timer source code.
+
