@@ -9,6 +9,7 @@ The application is built with **Python** and **PySide6**, **Bootstrap Icons** wi
 You can read about the motivation behind Puppy Timer in the [Motivation](docs/00_motivation.md) document.   
    
 - go to [Installation Guide](INSTALLATION.md)
+- go to [User Guide](docs/USER-GUIDE.md)
 
 ## Features  
 
